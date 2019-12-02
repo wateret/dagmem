@@ -1,7 +1,7 @@
 # Memory-efficient DAG Sheduling Challenge
 
 We have jobs to run with dependencies. (i.e. It is a directed acyclic graph.)
-The peak memory could vary by the order of execution. Since finding the optimal solution is NP-hard, let's find a decent solution in polynomial time.
+The peak memory could vary by the order of execution. Since finding the optimal solution is NP-hard, let's find **a decent solution in polynomial time**. You can refer to any papers or algorithms.
 
 - Only one job can be executed at a time (No parallel execution)
 - The evaluator handles memory management
@@ -9,6 +9,50 @@ The peak memory could vary by the order of execution. Since finding the optimal 
     - Frees memory as soon as no other jobs are dependent
 - A node that is not used by any other nodes are never be freed (Condsidered as an output node)
 - Your solution must be in topological or the evaluator will emit an error
+
+## Does that really matter?
+
+For example, we have a graph below.
+
+```
+0(100MB) --> 1(50MB) --> 3(150MB) --> 5(10MB)
+         \                         /
+          -> 2(20MB) --> 4(40MB) --
+```
+
+Run it with order `0 1 2 3 4`,
+
+```
+ACTION         | CURRENT | PEAK
+Alloc 0(100MB) |   100MB | 100MB
+Alloc 1( 50MB) |   150MB | 150MB
+Alloc 2( 20MB) |   170MB | 170MB
+Free  0(100MB) |    70MB | 170MB
+Alloc 3(150MB) |   220MB | 220MB
+Free  1( 50MB) |   170MB | 220MB
+Alloc 4( 40MB) |   210MB | 220MB
+Free  2( 20MB) |   190MB | 220MB
+Alloc 5( 10MB) |   200MB | 220MB
+Free  3(150MB) |    50MB | 220MB
+Free  4( 40MB) |    10MB | 220MB
+```
+
+Run it with order `0 1 3 2 4 5`, you can see the difference.
+
+```
+ACTION         | CURRENT | PEAK
+Alloc 0(100MB) |   100MB | 100MB
+Alloc 1( 50MB) |   150MB | 150MB
+Alloc 3(150MB) |   300MB | 300MB
+Free  1( 50MB) |   250MB | 300MB
+Alloc 2( 20MB) |   270MB | 300MB
+Free  0(100MB) |   170MB | 300MB
+Alloc 4( 40MB) |   210MB | 300MB
+Free  2( 20MB) |   190MB | 300MB
+Alloc 5( 10MB) |   200MB | 220MB
+Free  3(150MB) |    50MB | 220MB
+Free  4( 40MB) |    10MB | 220MB
+```
 
 ## How to run
 
