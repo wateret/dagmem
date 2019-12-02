@@ -49,9 +49,9 @@ Alloc 2( 20MB) |   270MB | 300MB
 Free  0(100MB) |   170MB | 300MB
 Alloc 4( 40MB) |   210MB | 300MB
 Free  2( 20MB) |   190MB | 300MB
-Alloc 5( 10MB) |   200MB | 220MB
-Free  3(150MB) |    50MB | 220MB
-Free  4( 40MB) |    10MB | 220MB
+Alloc 5( 10MB) |   200MB | 300MB
+Free  3(150MB) |    50MB | 300MB
+Free  4( 40MB) |    10MB | 300MB
 ```
 
 ## How to run
