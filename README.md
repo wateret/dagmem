@@ -20,7 +20,7 @@ For example, we have a graph below.
           -> 2(20MB) --> 4(40MB) --
 ```
 
-Run it with order `0 1 2 3 4`,
+Run it with order `0 1 2 3 4 5`,
 
 ```
 ACTION         | CURRENT | PEAK
